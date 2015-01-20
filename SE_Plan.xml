@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schedule>
+    
+
+    <semester number="1">
+        <course name="Discrete mathematics" type="mandatory"/>
+        <course name="Mathematical analysis" type="mandatory"/>
+        <course name="Linear Algebra" type="mandatory"/>
+        <course name="Introduction to programming" type="mandatory"/>
+        <course name="English" type="mandatory"/>
+    </semester>
+
+                        
+    <semester number="2">
+        <course name="Discrete mathematics 2" type="mandatory"/>
+        <course name="Mathematical analysis 2" type="mandatory"/>
+        <course name="Analytic Geometry" type="mandatory"/>
+        <course name="Object-oriented programming" type="mandatory"/>
+        <course name="Technical english" type="mandatory"/>
+    </semester>  
+
+
+    <semester number="3">
+        <course name="Data structures and algorithms" type="mandatory">
+            <dependancy_course name="Discrete mathematics" type="mandatory"/>
+            <dependancy_course name="Introduction to programming" type="mandatory"/>
+            <dependancy_course name="Object-oriented programming" type="mandatory"/>
+        </course>
+        <course name="Introduction to the Software Engineering" type="mandatory"/>
+        <course name="Economics of Software Engineering" type="mandatory"/>
+        <course name="Communication Skills" type="mandatory"/>
+        <course name="Computer architectures" type="mandatory"/>
+    </semester>
+        
+        
+    <semester number="4">
+        <course name="Differential Equations" type="mandatory"/>
+        <course name="Software Architectures and Software Development" type="mandatory"/>
+        <course name="Operating Systems" type="mandatory"/>
+        <course name="Computer networks" type="mandatory"/>
+        <course name="World Wide Web technologies" type="mandatory">
+            <dependancy_course name="Introduction to programming" type="mandatory"/>
+            <dependancy_course name="Object-oriented programming" type="mandatory"/>
+        </course>
+    </semester>   
+
+
+    <semester number="5">
+        <course name="XML and semanthic web" type="mandatory"/>
+        <course name="Quality management" type="mandatory"/>
+        <course name="Statistics and emperic methods" type="mandatory"/>
+        <course name="Social and legal aspects of the software engineering" type="mandatory"/>
+    </semester>
+        
+    <semester number="6">
+        <course name="Data Bases" type="mandatory"/>
+        <course name="Anasysis of software requirements" type="mandatory"/>
+        <course name="Distributet software architectures" type="mandatory"/>
+        <course name="Design of human-machine interface" type="mandatory"/>
+    </semester>
+
+
+    <semester number="7">
+        <course name="Project management" type="mandatory"/>
+        <course name="Design and integration of software systems" type="mandatory"/>
+        <course name="Data mining" type="mandatory"/>
+    </semester>
+        
+        
+    <semester number="8">
+            
+    </semester>
+
+    
+</schedule>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testObject>
+    <balance>10.0</balance>
+    <name>Ivan</name>
+    <years>30</years>
+</testObject>
