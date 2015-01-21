@@ -7,6 +7,7 @@ package com.fmi.xml.gui;
 
 import com.fmi.xml.comunicator.XmlComunicator;
 import com.fmi.xml.holder.ObjectsHolder;
+import com.fmi.xml.parsable.JaxbParsable;
 import java.io.File;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
@@ -45,6 +46,7 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaContent = new javax.swing.JTextArea();
         notificationArea = new javax.swing.JTextField();
+        bntValidate = new javax.swing.JButton();
 
         btnOpen.setText("Open");
         btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +72,13 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
 
         notificationArea.setEditable(false);
 
+        bntValidate.setText("Validate");
+        bntValidate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntValidateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +91,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(radioBtnOther)
                             .addComponent(radioBtnSchedule)))
-                    .addComponent(btnOpen))
+                    .addComponent(btnOpen)
+                    .addComponent(bntValidate))
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
@@ -104,7 +114,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
                         .addComponent(radioBtnSchedule)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioBtnOther)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bntValidate))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)))
@@ -120,6 +131,9 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         }
 
         File file = chooseFile();
+        if(file == null){
+            return;
+        }
         if (!file.toString().endsWith(".xml")) {
             notificationArea.setText("Unknown file format!");
             return;
@@ -130,11 +144,9 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         String selectedButton = getSelectedButton();
 
         try {
-            String content = xmlParser.getXmlContent(file, selectedButton);
-            txtAreaContent.setText(content);
-        } catch (JAXBException ex) {
-            displayExceptionMessage();
-        } catch (IllegalArgumentException e){
+            content = (JaxbParsable) xmlParser.loadObject(file, selectedButton);
+            txtAreaContent.setText(content.toString());
+        } catch (JAXBException | IllegalArgumentException ex) {
             displayExceptionMessage();
         }
     }//GEN-LAST:event_btnOpenActionPerformed
@@ -143,10 +155,31 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioBtnOtherActionPerformed
 
-    private ObjectsHolder holder;
-    private XmlComunicator xmlParser;
-    private JFileChooser fileChooser;
+    private void bntValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntValidateActionPerformed
+        File file = chooseFile();
+        if(file == null){
+            return;
+        }
+        if (!file.toString().endsWith(".xsd")) {
+            notificationArea.setText("Unknown file format!");
+            return;
+        } else {
+            notificationArea.setText("OK");
+        }
+
+        if (xmlParser.validate(content, file)) {
+            notificationArea.setText("Validated Successfully!");
+        }else{
+            notificationArea.setText("Validation Failed!");    
+        }
+    }//GEN-LAST:event_bntValidateActionPerformed
+
+    private JaxbParsable content;
+    private final ObjectsHolder holder;
+    private final XmlComunicator xmlParser;
+    private final JFileChooser fileChooser;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntValidate;
     private javax.swing.JButton btnOpen;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane jScrollPane1;

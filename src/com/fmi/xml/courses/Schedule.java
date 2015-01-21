@@ -5,7 +5,7 @@
  */
 package com.fmi.xml.courses;
 
-import com.fmi.xml.parsable.JabxParsable;
+import com.fmi.xml.parsable.JaxbParsable;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="schedule")
-public class Schedule implements JabxParsable{
+public class Schedule implements JaxbParsable{
 
     @XmlElement(name = "semester", type=Semester.class)
     private List<Semester> semesters;

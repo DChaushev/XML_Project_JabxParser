@@ -1,13 +1,14 @@
 package com.fmi.xml.comunicator;
 
 import com.fmi.xml.holder.ObjectsHolder;
-import com.fmi.xml.parsable.JabxParsable;
+import com.fmi.xml.parsable.JaxbParsable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -15,6 +16,9 @@ import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -23,6 +27,7 @@ import javax.xml.transform.stream.StreamResult;
 public class XmlComunicator<T> {
 
     private final ObjectsHolder map = ObjectsHolder.getInstance();
+    private JAXBContext context;
     
     public XmlComunicator() {
 
@@ -30,23 +35,44 @@ public class XmlComunicator<T> {
 
     public String getXmlContent(File file, String type) throws JAXBException {
 
-        JabxParsable obj = (JabxParsable) loadObject(file, map.getValue(type));
+        JaxbParsable obj = (JaxbParsable) loadObject(file, map.getValue(type));
         
         return obj.toString();
     }
+    
+    public boolean validate(JaxbParsable obj, File xsd){
+        
+        try {
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(xsd);
+            
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setSchema(schema);
+            marshaller.marshal(obj, new org.xml.sax.helpers.DefaultHandler());
+            
+            return true;
+            
+        } catch (SAXException | JAXBException ex) {
+            return false;
+        }
+    }
 
-    private T loadObject(File file, Class<T> typeParameterClass) throws JAXBException {
+    public T loadObject(File file, String type) throws JAXBException {
+        return (T) loadObject(file, map.getValue(type));
+    }
+    
+    public T loadObject(File file, Class<T> typeParameterClass) throws JAXBException {
 
-        JAXBContext context = JAXBContext.newInstance(typeParameterClass);
+        context = JAXBContext.newInstance(typeParameterClass);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         T object = (T) unmarshaller.unmarshal(file);
 
         return object;
     }
 
-    private void writeObject(T object, File file, Class<T> typeParameterClass) throws JAXBException, IOException {
+    public void writeObject(T object, File file, Class<T> typeParameterClass) throws JAXBException, IOException {
 
-        JAXBContext context = JAXBContext.newInstance(typeParameterClass);
+        context = JAXBContext.newInstance(typeParameterClass);
         Marshaller marshaller = context.createMarshaller();
 
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -70,28 +96,4 @@ public class XmlComunicator<T> {
             }
         });
     }
-
-//    public static void main(String[] args) throws JAXBException, FileNotFoundException, IOException {
-//
-//        String key = "Schedule";
-//
-//        XmlComunicator comunicator = new XmlComunicator();
-//
-//        File xml = new File("SE_Plan.xml");
-//        XmlParsable schedule = (XmlParsable) comunicator.loadObject(xml, map.get(key));
-//        System.out.println(schedule);
-//
-//        List<Semester> s = schedule.getSemesters();
-//        
-//        for (Semester s1 : s) {
-//            List<Course> c = s1.getCourses();
-//            for (Course c1 : c) {
-//                if(c1.getDependencies().size() != 0){
-//                    System.out.println(c1);
-//                }
-//            }
-//        }
-//        File output = new File("writtenSchedule.xml");
-//        comunicator.writeObject(schedule, output, Schedule.class);
-//    }
 }

@@ -6,7 +6,7 @@
 
 package com.fmi.xml.others;
 
-import com.fmi.xml.parsable.JabxParsable;
+import com.fmi.xml.parsable.JaxbParsable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author vankata
  */
 @XmlRootElement
-public class TestObject implements JabxParsable{
+public class TestObject implements JaxbParsable{
     private String name;
     private int years;
     private double balance;

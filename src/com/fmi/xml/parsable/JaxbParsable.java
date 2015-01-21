@@ -9,6 +9,6 @@ package com.fmi.xml.parsable;
  *
  * @author Dimitar
  */
-public interface JabxParsable {
+public interface JaxbParsable {
     
 }
