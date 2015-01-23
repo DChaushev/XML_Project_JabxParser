@@ -66,6 +66,7 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
             }
         });
 
+        txtAreaContent.setEditable(false);
         txtAreaContent.setColumns(20);
         txtAreaContent.setRows(5);
         jScrollPane1.setViewportView(txtAreaContent);
@@ -123,6 +124,19 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method is called when you press the Open button from the GUI. It
+     * won't do nothing if you haven't chosen class type from the radio buttons.
+     * So, first you choose the class you desire to parse, then press this
+     * button and get popped up to fileChooser. Navigate to the XML file you
+     * want to parse and open it.
+     *
+     * If everything is OK -> your XML will be parsed and the content will be
+     * displayed at the empty text area.
+     *
+     * If not -> you'll get the corresponding error messages.
+     *
+     */
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
 
         if (buttonGroup1.getSelection() == null) {
@@ -131,7 +145,7 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         }
 
         File file = chooseFile();
-        if(file == null){
+        if (file == null) {
             return;
         }
         if (!file.toString().endsWith(".xml")) {
@@ -155,9 +169,22 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioBtnOtherActionPerformed
 
+    /**
+     * Once you've already successfully loaded a XML file, you can validate it
+     * with this button.
+     *
+     * All you have to do is choose a XSD schema from the fileChooser. Then your
+     * object will be validated an you'll get message if the validation was
+     * successful or it failed.
+     *
+     */
     private void bntValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntValidateActionPerformed
+        if (content == null) {
+            notificationArea.setText("Nothing to validate!");
+            return;
+        }
         File file = chooseFile();
-        if(file == null){
+        if (file == null) {
             return;
         }
         if (!file.toString().endsWith(".xsd")) {
@@ -169,8 +196,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
 
         if (xmlParser.validate(content, file)) {
             notificationArea.setText("Validated Successfully!");
-        }else{
-            notificationArea.setText("Validation Failed!");    
+        } else {
+            notificationArea.setText("Validation Failed!");
         }
     }//GEN-LAST:event_bntValidateActionPerformed
 

@@ -30,6 +30,7 @@ public class XmlDisplayFrame extends javax.swing.JFrame {
         xmlDisplayPanel1 = new com.fmi.xml.gui.XmlDisplayPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("JAXB Parser");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

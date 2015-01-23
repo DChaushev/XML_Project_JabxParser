@@ -6,7 +6,10 @@
 package com.fmi.xml.parsable;
 
 /**
- *
+ * This interface must be implemented from all classes that
+ * desire to be parsed with the application.
+ * It has no methods for implementation.
+ * 
  * @author Dimitar
  */
 public interface JaxbParsable {
