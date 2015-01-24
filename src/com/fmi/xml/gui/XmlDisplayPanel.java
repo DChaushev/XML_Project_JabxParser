@@ -6,7 +6,9 @@
 package com.fmi.xml.gui;
 
 import com.fmi.xml.comunicator.XmlComunicator;
+import com.fmi.xml.courses.Schedule;
 import com.fmi.xml.holder.ObjectsHolder;
+import com.fmi.xml.others.TestObject;
 import com.fmi.xml.parsable.JaxbParsable;
 import java.io.File;
 import java.util.Enumeration;
@@ -28,6 +30,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         fileChooser = new JFileChooser();
         xmlParser = new XmlComunicator();
         holder = ObjectsHolder.getInstance();
+        holder.addElement("Schedule", Schedule.class);
+        holder.addElement("TestObject", TestObject.class);
     }
 
     /**

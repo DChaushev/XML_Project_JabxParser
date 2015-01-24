@@ -11,12 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is an singleton class that maps classes, that can be parsed
- * with JAXB parser, to Strings.
- * If you want to parse new class with the application, you must add it
- * to the ObjectHolder's constructor, to add it dynamically with addElement
- * method.
- * 
+ * This is an singleton class that maps classes, that can be parsed with JAXB
+ * parser, to Strings. If you want to parse new class with the application, you
+ * must add it to the ObjectHolder's constructor, to add it dynamically with
+ * addElement method.
+ *
  * @author Dimitar
  */
 public class ObjectsHolder {
@@ -27,8 +26,6 @@ public class ObjectsHolder {
 
     private ObjectsHolder() {
         map = new HashMap<>();
-        map.put("Schedule", Schedule.class);
-        map.put("TestObject", TestObject.class);
     }
 
     public static ObjectsHolder getInstance() {
@@ -42,10 +39,10 @@ public class ObjectsHolder {
         return holder;
     }
 
-    public boolean containsKey(String s){
+    public boolean containsKey(String s) {
         return map.containsKey(s);
     }
-    
+
     public Class getValue(String s) {
         if (map.containsKey(s)) {
             return map.get(s);
@@ -56,8 +53,9 @@ public class ObjectsHolder {
     public void addElement(String s, Class c) {
         if (!map.containsKey(s)) {
             map.put(s, c);
+        } else {
+            throw new UnsupportedOperationException("Class already exists!");
         }
-        throw new UnsupportedOperationException("Class already exists!");
     }
 
 }
