@@ -1,4 +1,4 @@
-# XML_Project_JabxParser
+# XML_Project_JaxbParser
 
 This is my project for manditory course XML Technologies at the university.<br/>
 I'm using JABX xml parser to parse different xml files that have the relevant classes.<br/>
