@@ -51,6 +51,7 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         txtAreaContent = new javax.swing.JTextArea();
         notificationArea = new javax.swing.JTextField();
         bntValidate = new javax.swing.JButton();
+        btnTransform = new javax.swing.JButton();
 
         btnOpen.setText("Open");
         btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -84,6 +85,13 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
             }
         });
 
+        btnTransform.setText("Transform");
+        btnTransform.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransformActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +111,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(notificationArea, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTransform)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -114,7 +123,8 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnOpen)
-                            .addComponent(notificationArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(notificationArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTransform))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioBtnSchedule)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,6 +215,29 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bntValidateActionPerformed
 
+    private void btnTransformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransformActionPerformed
+        if (content == null) {
+            notificationArea.setText("Nothing to validate!");
+            return;
+        }
+        File file = chooseFile();
+        if (file == null) {
+            return;
+        }
+        if (!file.toString().endsWith(".xsl")) {
+            notificationArea.setText("Unknown file format!");
+            return;
+        } else {
+            notificationArea.setText("OK");
+        }
+
+        if (xmlParser.applyTransformation(content, file)) {
+            notificationArea.setText("Transformation Successfully!");
+        } else {
+            notificationArea.setText("Transformation Failed!");
+        }
+    }//GEN-LAST:event_btnTransformActionPerformed
+
     private JaxbParsable content;
     private final ObjectsHolder holder;
     private final XmlComunicator xmlParser;
@@ -212,6 +245,7 @@ public class XmlDisplayPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntValidate;
     private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnTransform;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField notificationArea;
